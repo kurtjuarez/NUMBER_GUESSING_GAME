@@ -9,4 +9,7 @@ USER_ID=$($PSQL "SELECT user_id FROM users WHERE username='$USERNAME';")
 if [[ -z $USER_ID ]]
 then
   echo Welcome, $USERNAME! It looks like this is your first time here.
+else
+  GAMES_PLAYED=$($PSQL "SELECT games_played FROM games WHERE user_id=$USER_ID;")
+  BEST_GAME=$($PSQL "SELECT best_game FROM games WHERE user_id=$USER_ID;")
 fi
