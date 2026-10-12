@@ -3,14 +3,14 @@ PSQL="psql --username=freecodecamp --dbname=number_guess -t --no-align -c"
 SECRET_NUMBER=$(( RANDOM % 1000 + 1 ))
 echo "Enter your username:"
 read USERNAME_INPUT
-USERNAME=$($PSQL "SELECT username FROM users WHERE username='$USERNAME_INPUT';")
+USERNAME=$($PSQL "SELECT name FROM users WHERE name='$USERNAME_INPUT';")
 if [[ -z $USERNAME ]]
 then
   echo "Welcome, $USERNAME_INPUT! It looks like this is your first time here."
   $PSQL "INSERT INTO users(username) VALUES('$USERNAME_INPUT');"
 else
-  GAMES_PLAYED=$($PSQL "SELECT COUNT(*) FROM games INNER JOIN users USING(user_id) WHERE users.username='$USERNAME';")
-  BEST_GAME=$($PSQL "SELECT MIN(number_of_guesses) FROM games INNER JOIN users USING(user_id) WHERE users.username='$USERNAME';")
+  GAMES_PLAYED=$($PSQL "SELECT COUNT(*) AS total_number_of_games FROM games INNER JOIN users USING(user_id) WHERE users.username='$USERNAME';")
+  BEST_GAME=$($PSQL "SELECT MIN(number_of_guesses) AS fewest_number_of_guesses FROM games INNER JOIN users USING(user_id) WHERE users.username='$USERNAME';")
 
   echo "Welcome back, $USERNAME! You have played $GAMES_PLAYED games, and your best game took $BEST_GAME guesses."
 fi
