@@ -1,9 +1,9 @@
 #!/bin/bash
-PSQL="psql --username=freecodecamp --dbname=number_guess -t --no-align -c"
+PSQL="psql --username=freecodecamp --dbname=number_guess -t --no-align -q -c"
 SECRET_NUMBER=$(( RANDOM % 1000 + 1 ))
 echo "Enter your username:"
 read USERNAME_INPUT
-USERNAME=$($PSQL "SELECT name FROM users WHERE name='$USERNAME_INPUT';")
+USERNAME=$($PSQL "SELECT username FROM users WHERE username='$USERNAME_INPUT';")
 if [[ -z $USERNAME ]]
 then
   echo "Welcome, $USERNAME_INPUT! It looks like this is your first time here."
