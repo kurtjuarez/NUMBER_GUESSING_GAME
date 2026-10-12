@@ -12,4 +12,7 @@ then
 else
   GAMES_PLAYED=$($PSQL "SELECT games_played FROM games WHERE user_id=$USER_ID;")
   BEST_GAME=$($PSQL "SELECT best_game FROM games WHERE user_id=$USER_ID;")
+
+  echo Welcome back, $USERNAME! You have played $GAMES_PLAYED games, and your best game took $BEST_GAME guesses.
 fi
+done
